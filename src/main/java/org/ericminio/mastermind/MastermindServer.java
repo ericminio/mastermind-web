@@ -1,12 +1,10 @@
 package org.ericminio.mastermind;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
-import org.apache.commons.io.FileUtils;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.core.Container;
@@ -34,8 +32,7 @@ public class MastermindServer implements Container {
 			response.setDate( "Date", time );
 			response.setDate( "Last-Modified", time );
 
-			String html = FileUtils.readFileToString(new File("index.html"));
-			body.append( html );
+			body.append( "Mastermind" );
 			body.close();
 		} catch (IOException e) {
 			e.printStackTrace();
