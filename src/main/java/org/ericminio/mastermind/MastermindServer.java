@@ -17,7 +17,7 @@ public class MastermindServer implements Container {
 	public static void main(String[] args) throws IOException {
 		Container container = new MastermindServer();
 		connection = new SocketConnection( container );
-		SocketAddress address = new InetSocketAddress( Integer.valueOf(System.getenv("PORT")) );
+		SocketAddress address = new InetSocketAddress( 8080 );
 		connection.connect( address );
 	}
 

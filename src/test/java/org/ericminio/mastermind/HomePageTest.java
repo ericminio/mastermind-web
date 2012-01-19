@@ -4,7 +4,9 @@ import java.io.IOException;
 
 import net.sourceforge.jwebunit.junit.WebTester;
 
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 public class HomePageTest extends WebTester {
 
