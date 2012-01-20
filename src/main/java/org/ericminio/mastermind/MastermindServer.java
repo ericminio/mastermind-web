@@ -5,6 +5,8 @@ import java.io.PrintStream;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
+import org.ericminio.mastermind.http.PORTSystemEnvReader;
+import org.ericminio.mastermind.http.PortProvider;
 import org.simpleframework.http.Request;
 import org.simpleframework.http.Response;
 import org.simpleframework.http.core.Container;
@@ -13,21 +15,17 @@ import org.simpleframework.transport.connect.SocketConnection;
 public class MastermindServer implements Container {
 
 	static SocketConnection connection;
-	static PortProvider portProvider;
-
-	public MastermindServer() {
-		setPortProvider( new HerokuPortProvider() );
-	}
-	
-	public static void setPortProvider(PortProvider provider) {
-		portProvider = provider;
-	}
+	public static PortProvider portProvider = new PORTSystemEnvReader();
 
 	public static void main(String[] args) throws IOException {
 		Container container = new MastermindServer();
 		connection = new SocketConnection( container );
 		SocketAddress address = new InetSocketAddress( portProvider.getPort() );
 		connection.connect( address );
+	}
+
+	public static void stop() throws IOException {
+		connection.close();
 	}
 
 	@Override
