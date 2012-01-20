@@ -13,11 +13,20 @@ import org.simpleframework.transport.connect.SocketConnection;
 public class MastermindServer implements Container {
 
 	static SocketConnection connection;
+	static PortProvider portProvider;
+
+	public MastermindServer() {
+		setPortProvider( new HerokuPortProvider() );
+	}
+	
+	public static void setPortProvider(PortProvider provider) {
+		portProvider = provider;
+	}
 
 	public static void main(String[] args) throws IOException {
 		Container container = new MastermindServer();
 		connection = new SocketConnection( container );
-		SocketAddress address = new InetSocketAddress( 8080 );
+		SocketAddress address = new InetSocketAddress( portProvider.getPort() );
 		connection.connect( address );
 	}
 
@@ -28,7 +37,7 @@ public class MastermindServer implements Container {
 			long time = System.currentTimeMillis();
 
 			response.set( "Content-Type", "text/html" );
-			response.set( "Server", "HelloWorld/1.0 (Simple 4.0)" );
+			response.set( "Server", "Mastermind/1.0 (Simple 4.0)" );
 			response.setDate( "Date", time );
 			response.setDate( "Last-Modified", time );
 
